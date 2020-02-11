@@ -1,0 +1,41 @@
+<head>
+  {{ html.charset() }}
+
+  <!--Tray meta -->
+  {{ tray.meta|replace({'IE=9': 'IE=edge'}) }}
+
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Styles -->
+  <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet"> -->
+  <link rel="stylesheet" href="{{ asset('css/style.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/plugins/slick.min.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/custom.css', {dynamic: true}) }}" type="text/css">
+
+  <!-- Tray Analytics -->
+  {{ tray.analytics }}
+
+  {{ googleTagManager.header(pages.current, tagManagerData) }}
+</head>
+
+<body>
+  {{ googleTagManager.top(pages.current, tagManagerData) }}
+
+  {#
+  {% element 'snippets/implantation' %}
+  #}
+
+  <header class="header">
+    <h1>HEADER</h1>
+  </header>
+
+  {#
+  {% element 'snippets/menu-mobile' %}
+
+  {% if pages.current in ['catalog', 'search'] %}
+      {% element 'snippets/filter-mobile' %}
+  {% endif %}
+  #}

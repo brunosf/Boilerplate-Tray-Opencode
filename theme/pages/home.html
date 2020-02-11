@@ -1,89 +1,29 @@
-{% if settings.limitProducts %}
-    {% set limitProducts = settings.limitProducts %}
-{% else %}
-    {% set limitProducts = 12 %}
-{% endif %}
+{# First Showcase #}
+{% if settings.showcase_type_1 == "featured" %}
+    {% set showcaseTitle = "Destaques" %}
 
-{% set showAvailable = settings.show_available_products ? 'available' %}
+{% elseif settings.showcase_type_1 == "new" %}
+    {% set showcaseTitle = "Lan&ccedil;amentos" %}
 
-{% if settings.showcase == "featured" %}
-    {% set showcaseText = Translation('destaques') %}
-{% elseif settings.showcase == "new" %}
-    {% set showcaseText = Translation('lancamentos') %}
-{% elseif settings.showcase == "free_shipping" %}
-    {% set showcaseText = Translation('frete_gratis_min') %}
-{% elseif settings.showcase == "promotion" %}
-    {% set showcaseText = Translation('promocoes') %}
-{% elseif settings.showcase == "top_seller" %}
-    {% set showcaseText = Translation('mais_vendidos') %}
-{% endif %}
+{% elseif settings.showcase_type_1 == "free_shipping" %}
+    {% set showcaseTitle = "Frete Gr&aacute;tis" %}
 
-{% if showAvailable %}
-    {% if settings.showcase == "top_seller" %}
-    <div id="prognoos_popv1"></div>
+{% elseif settings.showcase_type_1 == "promotion" %}
+    {% set showcaseTitle = "Promo&ccedil;&otilde;es" %}
 
-        {% set products = Products({
-            'filter': showAvailable,
-            'limit': limitProducts,
-            'order': {'quantity_sold': 'desc'}
-        }) %}
+{% elseif settings.showcase_type_1 == "top_seller" %}
+    {% set showcaseTitle = "Mais Vendidos" %}
 
-    {% else %}
-        {% set products = Products({
-            'filter': [showAvailable, settings.showcase],
-            'limit': limitProducts,
-            'order': 'rand'
-        }) %}
-    {% endif %}
-
-{% else %}
-    {% if settings.showcase == "top_seller" %}
-    <div id="prognoos_popv1"></div>
-
-        {% set products = Products({
-            'filter': available,
-            'limit': limitProducts,
-            'order': {'quantity_sold': 'desc'}
-        }) %}
-    {% else %}
-        {% set products = Products({
-            'filter': settings.showcase,
-            'limit': limitProducts,
-            'order': 'rand'
-        }) %}
-    {% endif %}
-{% endif %}
-
-{% if utils.is_mobile and settings.enable_banner_home %}
-    {% element 'snippets/banner-home' %}
-{% else %}
-    {% if not utils.is_mobile %}
-        {% element 'snippets/banner-home' %}
-    {% endif %}
-{% endif %}
-
-<!--banner regua -->
-{% if not utils.is_mobile and banner.extra1 %}
-    <div class="banner banner-ruler">
-        {{ banner.extra1 }}
-    </div>
-{% elseif utils.is_mobile and banner.extra8 %}
-    <div class="banner banner-ruler">
-        {{ banner.extra8 }}
-    </div>
+{% elseif settings.showcase_type_1 == "only_categories" %}
+    {% set showcaseTitle = "Categoria sem t&iacute;tulo" %}
 {% endif %}
 
 {% element 'showcase' {
-    "products": products,
-    "showcaseTitle": showcaseText
+    'prodTitle': settings.showcase_title1 != '' ? settings.showcase_title1 : showcaseTitle,
+    'prodSubTitle': settings.showcase_subtitle_1 != '' ? settings.showcase_subtitle_1,
+    'prodFilter': settings.showcase_type_1 == 'top_seller' ? 'available' : settings.showcase_type_1,
+    'prodOrder': settings.showcase_type_1 == 'top_seller' ? { 'quantity_sold': 'desc' } : 'rand',
+    'prodCategories': settings.showcase_cat_1 != '' ? settings.showcase_cat_1|split(',') : '',
+    'setCarousel': true,
+    'classContainer': 'showcase--first'
 } %}
-
-{% if banner.bottom %}
-    <div class="banner banner-bottom {% if not settings.enable_banner_default %}mobile-off{% endif %}">
-        {{ banner.bottom }}
-    </div>
-{% endif %}
-
-{% if pages.current == 'home' %}
-	{{ banner.popup ~ banner.floating }}
-{% endif %}
