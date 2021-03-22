@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  opencode:
+    container_name: tray_theme
+    build: ./dist
+    volumes:
+      - "./dist/theme:/usr/app"
+    command: bash -c "
+      opencode configure ${API_KEY} ${PASSWORD} ${THEME_ID} &&
+      opencode download &&
+      opencode clean &&
+      opencode watch"
