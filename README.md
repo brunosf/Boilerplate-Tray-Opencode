@@ -1,6 +1,6 @@
-# Boilerplate temas Tray
+# Boilerplate para temas Tray e-commerce
 
-Um boilerplate para iniciar os temas da tray com mais facilidade.
+Um boilerplate para facilitar a instalação do ambiente de desenvolvimento de temas para Tray e-commerce.
 
 ## Primeiros passos
 
@@ -40,4 +40,12 @@ docker-compose up
 docker-compose up -d
 ```
 
-Com isso o docker irá baixar o tema e ficará observando as mudanças realizadas nos arquivos.
+Com isso o docker irá baixar o tema dentro da pasta **/dist** e ficará observando as mudanças realizadas nos arquivos.  
+
+Caso queira executar outros comandos do opencode, deve entrar no container com o seguinte comando:
+
+```shell
+docker exec it ID_DO_CONTAINER /bin/sh
+```
+
+Para consultar os comandos disponíveis, execute dentro do container: `opencode -h`

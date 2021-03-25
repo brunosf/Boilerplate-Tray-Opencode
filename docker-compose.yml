@@ -3,7 +3,7 @@ version: '3.9'
 services:
   opencode:
     container_name: tray_theme
-    build: ./dist
+    image: brunosf/tray-opencode
     volumes:
       - "./dist/theme:/usr/app"
     command: bash -c "

@@ -1,5 +1,8 @@
 FROM ubuntu
 
+LABEL maintainer="contato@brunoferreira.dev"
+LABEL version="1.0"
+
 WORKDIR /usr/app
 
 RUN apt-get update
